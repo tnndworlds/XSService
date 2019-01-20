@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    <tx:annotation-driven transaction-manager="transactionManager" order="400"></tx:annotation-driven>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- mybatis配置文件自动扫描路径 -->
+		<property name="mapperLocations" value="classpath:mybatis/mysql/*.xml"></property>
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!--User define dao start-->
+
+	<bean id="userDao" class="com.mailang.jdbc.dao.UserDao">
+		<property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+	</bean>
+	<bean id="bookTypeDao" class="com.mailang.jdbc.dao.BookTypeDao">
+		<property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+	</bean>
+	<bean id="sysCfgDao" class="com.mailang.jdbc.dao.SYSCfgDao">
+		<property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+	</bean>
+    <bean id="bookDao" class="com.mailang.jdbc.dao.BookDao">
+        <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+    </bean>
+	<!--User define dao end-->
+
+	<!-- precaution dao层注入结束 -->
+	<bean id="sqlDao" class="com.mailang.jdbc.mybatis.SQLDao">
+		<property name="sqlMapper" ref="sqlMapper"></property>
+	</bean>
+	
+	<bean id="sqlMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.mailang.jdbc.mybatis.mapper.SQLMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	<bean id="abstractDaoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.mailang.jdbc.mybatis.mapper.AbstractDaoMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+</beans>

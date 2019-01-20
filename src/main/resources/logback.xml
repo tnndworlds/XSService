@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property resource="prop/log.properties"/>
+    <!--输出console-->
+    <appender name="Stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!--输出格式-->
+        <encoder>
+            <pattern>${global.pattern}</pattern>
+        </encoder>
+    </appender>
+    <!--输出到文件-->
+    <appender name="xsbook" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志输出的文件名，路径项目根目录-->
+        <file>${global.LogDirctory}/xs.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${global.pattern}</pattern>
+        </encoder>
+
+        <!--时间回滚，当天的记录记录在当天的已时间命名的文件中-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>xs.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 3 days' worth of history -->
+            <maxHistory>${global.maxHistory}</maxHistory>
+            <maxFileSize>${global.maxFileSize}</maxFileSize>
+            <totalSizeCap>${global.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+
+    </appender>
+
+
+    <appender name="system" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志输出的文件名，路径项目根目录-->
+        <file>${global.LogDirctory}/system/system.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${global.pattern}</pattern>
+        </encoder>
+
+        <!--时间回滚，当天的记录记录在当天的已时间命名的文件中-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>system.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 3 days' worth of history -->
+            <maxHistory>${global.maxHistory}</maxHistory>
+            <maxFileSize>${global.maxFileSize}</maxFileSize>
+            <totalSizeCap>${global.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.mailang" level="${log.level}" additivity="false">
+        <appender-ref ref="xsbook"/>
+    </logger>
+
+    <!-- 打印Debug级别日志及以上级别日志 -->
+    <root level="DEBUG">
+        <appender-ref ref="system" />
+    </root>
+</configuration>

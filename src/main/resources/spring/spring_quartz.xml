@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 要调用的工作类 -->
+	<bean id="insightJob"
+		class="com.mailang.taskmgt.job.XSJob">
+	</bean>
+
+
+	<!-- Excute method defination start -->
+	<bean id="initDB"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="insightJob" />
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>test</value>
+		</property>
+	</bean>
+
+	<bean id="doTimeForInit"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="initDB" />
+		</property>
+		<!-- 应用启动时延迟加载 -->
+		<property name="startDelay">
+			<value>1000</value>
+		</property>
+		<property name="repeatInterval">
+			<value>5000</value>
+		</property>
+		<!-- 定义重复次数 0 为执行一次，-1 为不停止 -->
+		<property name="repeatCount">
+			<value>0</value>
+		</property>
+	</bean>
+
+	<!-- Do time defination end -->
+	
+	
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="quartzTaskMgt" lazy-init="true" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+			</list>
+		</property>
+	 	<property name="triggers">
+			 <list>
+                <ref bean="doTimeForInit" />
+			</list> 
+		</property> 
+	</bean>
+</beans>
