@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.mailang.bean.xml.TemplateRest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 

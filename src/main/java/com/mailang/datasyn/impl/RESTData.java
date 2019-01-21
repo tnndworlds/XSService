@@ -1,8 +1,8 @@
 package com.mailang.datasyn.impl;
 
-import com.huawei.clouddragon.dashboardmgrservice.bean.URLBean;
-import com.huawei.clouddragon.dashboardmgrservice.commonsyn.DataSynchronized;
-import com.huawei.clouddragon.dashboardmgrservice.utils.SpringUtils;
+import com.mailang.bean.URLBean;
+import com.mailang.datasyn.DataSynchronized;
+import com.mailang.utils.SpringUtils;
 import net.sf.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
