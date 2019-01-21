@@ -26,4 +26,7 @@ public interface AbstractDaoMapper
 
     @SelectProvider(type=SQLProvider.class, method="update")
     List<Map<String, Object>> update(DBean reqBean);
+
+    @SelectProvider(type=SQLProvider.class, method="deleteById")
+    void deleteById(DBean reqBean);
 }

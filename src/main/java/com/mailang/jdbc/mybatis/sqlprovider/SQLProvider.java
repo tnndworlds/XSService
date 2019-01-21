@@ -40,7 +40,7 @@ public class SQLProvider
         return reqBean.getSql();
     }
 
-    public String save(DBean reqBean)
+    public String save(final DBean reqBean)
     {
         String className = reqBean.getClazz().getName();
         final String tblName = TableFactory.getInstance().getTableNameByClassName(className);
@@ -66,11 +66,29 @@ public class SQLProvider
                 {
                     colValue = AutoIncreaseSequenceGenerator.getSerialNum();
                 }
+
+                if (tableMeta.getPrimaryKeys().contains(columnMeta))
+                {
+                    reqBean.setPrimaryValue(colValue);
+                }
+
                 VALUES(columnMeta.getColumnName(), "'" + colValue + "'");
             }
 
         }}.toString();
         LOG.debug("Save Sql: {}.", sql.toString());
+        return sql;
+    }
+
+    public String deleteById(DBean reqBean)
+    {
+        String className = reqBean.getClazz().getName();
+        StringBuilder tName = new StringBuilder();
+        tName.append(TableFactory.getInstance().getTableNameByClassName(className));
+        final String tblName = tName.toString();
+        String id = String.valueOf(reqBean.getId());
+        String sql = "DELETE FROM " + tblName + " WHERE ID = '" + id + "'";
+        LOG.debug("queryById Sql: {}.", sql);
         return sql;
     }
 
