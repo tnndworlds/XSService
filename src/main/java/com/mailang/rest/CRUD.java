@@ -1,19 +1,19 @@
 package com.mailang.rest;
+
 import com.mailang.bean.qmodel.AUModel;
-import com.mailang.bean.qmodel.Authorization;
 import com.mailang.bean.qmodel.QModel;
 import com.mailang.bean.qmodel.RetMessage;
 import com.mailang.cons.ERRCode;
 import com.mailang.jdbc.mybatis.AbstractDao;
 import com.mailang.jdbc.persist.DBUtils;
-import com.mailang.log.XSLogger;
-import com.mailang.log.XSLoggerFactory;
 import com.mailang.utils.SpringUtils;
 import com.mailang.utils.Utils;
 import com.mailang.xsexception.XSException;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,22 +22,22 @@ import java.util.Map;
 @RequestMapping(value = "rest/crud")
 public class CRUD
 {
-    private static XSLogger LOG = XSLoggerFactory.getLogger(CRUD.class);
+    private static Logger LOG = LoggerFactory.getLogger(CRUD.class);
+
     /**
      * @param type daoId
-     * @param id queryId
+     * @param id   queryId
      * @return
      */
     @ResponseBody
-    @Authorization
-    @RequestMapping(value="/query", method= RequestMethod.GET, produces="application/json;charset=UTF-8")
-    public RetMessage query(@RequestParam("type")String type, @RequestParam("id")String id)
+    @RequestMapping(value = "/query", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public RetMessage query(@RequestParam("type") String type, @RequestParam("id") String id)
     {
         RetMessage retMessage = new RetMessage();
         try
         {
             LOG.debug("QyeryById:Request parameter, type: {}, id:{}.", type, id);
-            AbstractDao aDao = (AbstractDao) SpringUtils.getBeanById(type);
+            AbstractDao aDao = (AbstractDao)SpringUtils.getBeanById(type);
             retMessage.setCode(ERRCode.SUCCESS);
             retMessage.setData(aDao.queryById(id));
             return retMessage;
@@ -59,8 +59,7 @@ public class CRUD
     }
 
     @ResponseBody
-    @Authorization
-    @RequestMapping(value="/query", method=RequestMethod.POST, produces="application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/query", method = RequestMethod.POST, produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public RetMessage query(@RequestBody QModel qModel)
     {
         RetMessage retMessage = new RetMessage();
@@ -94,14 +93,13 @@ public class CRUD
     }
 
     @ResponseBody
-    @Authorization
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public RetMessage addOrUpate(@RequestBody AUModel auModel)
     {
         RetMessage retMessage = new RetMessage();
         try
         {
-            AbstractDao aDao = (AbstractDao) SpringUtils.getBeanById(auModel.getType());
+            AbstractDao aDao = (AbstractDao)SpringUtils.getBeanById(auModel.getType());
             Map<String, Object> dataMap = auModel.getData();
             if (!auModel.isDBColumn())
             {
@@ -128,24 +126,21 @@ public class CRUD
     }
 
     @ResponseBody
-    @Authorization
-    @RequestMapping(value="/update", method=RequestMethod.POST, produces="text/html;charset=UTF-8", consumes = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "text/html;charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public String queryById(@RequestBody AUModel auModel)
     {
         return "update";
     }
 
     @ResponseBody
-    @Authorization
-    @RequestMapping(value="/delete", method=RequestMethod.POST, produces="text/html;charset=UTF-8", consumes = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public String delete(@RequestBody QModel qModel)
     {
         return "update";
     }
 
     @ResponseBody
-    @Authorization
-    @RequestMapping(value="/aubatch", method=RequestMethod.POST, produces="text/html;charset=UTF-8", consumes = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/aubatch", method = RequestMethod.POST, produces = "text/html;charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public String auBatch(@RequestBody List<AUModel> auModelList)
     {
         return "update";

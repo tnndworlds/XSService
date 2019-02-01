@@ -13,14 +13,14 @@
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 	<context:component-scan base-package="com.mailang.*"/>
-    
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/rest/**"/>
-            <bean class="com.mailang.rest.AuthorizationInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
-    
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/rest/**"/>
+			<bean class="com.mailang.rest.AuthorizationInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
@@ -38,17 +38,17 @@
 		<property name="supportedMediaTypes">
 			<list>
 				<value>application/json;charset=UTF-8</value>
-                <value>multipart/form-data; charset=UTF-8</value>
-                <value>application/octet-stream; charset=UTF-8</value>
+				<value>multipart/form-data; charset=UTF-8</value>
+				<value>application/octet-stream; charset=UTF-8</value>
 			</list>
 		</property>
 
 	</bean>
 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="utf-8" />
-        <property name="maxUploadSize" value="104857600"/>
-    </bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="104857600"/>
+	</bean>
 
 	<bean id="springUtils" class="com.mailang.utils.SpringUtils">
 	</bean>

@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class RecordToMap implements DataAdapter
 {
-
     @Override
     public Object adapter(ContentBean contentBean, List<Map<String, Object>> dataList)
     {

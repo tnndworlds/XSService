@@ -96,7 +96,6 @@ public class TemplateDataProvider
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static void parseTemplateFile(File templateFile)
 	{
 		SAXReader saxReader = new SAXReader();  
@@ -189,7 +188,7 @@ public class TemplateDataProvider
 				{
 					try
 					{
-						DataAdapter dataAdapter = (DataAdapter)Class.forName(contentBean.getDataAdapter()).newInstance();
+						DataAdapter dataAdapter = (DataAdapter)Class.forName(contentBean.getDataAdapter().trim().split(":")[0]).newInstance();
 						return dataAdapter.adapter(contentBean, queryResult);
 					}
 					catch (Exception e)
