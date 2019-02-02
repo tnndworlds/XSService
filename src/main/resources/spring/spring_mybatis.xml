@@ -50,4 +50,8 @@
     <bean id="ddTaskDao" class="com.mailang.jdbc.dao.DDTaskDao">
         <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
     </bean>
+
+    <bean id="userDao" class="com.mailang.jdbc.dao.UserDao">
+        <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+    </bean>
 </beans>

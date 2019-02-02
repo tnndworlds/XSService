@@ -5,7 +5,7 @@ import com.mailang.jdbc.persist.annotation.Column;
 import com.mailang.jdbc.persist.annotation.Id;
 import com.mailang.jdbc.persist.annotation.Table;
 
-@Table(name="tbl_xs_users", dataSource = "xsbook")
+@Table(name="xs_dd_user", dataSource = "xsservice")
 public class UserEntity
 {
 	@Id
@@ -17,18 +17,15 @@ public class UserEntity
 
     @Column(colName="PASSWORD")
     private String password;
-	
-	@Column(colName="SEX")
-	private String sex;
 
-	@Column(colName="PHOTO")
-	private String photo;
-	
-	@Column(colName="PERSONAL_SIGN")
-	private String personalSign;
+    @Column(colName="EMAIL")
+    private String email;
 
-    @Column(colName="COLLEGE")
-    private String college;
+    @Column(colName="TEL_NO")
+    private Integer telNo;
+
+    @Column(colName="DESCRIPTION")
+    private String description;
 
     public String getId()
     {
@@ -60,43 +57,33 @@ public class UserEntity
         this.password = password;
     }
 
-    public String getSex()
+    public String getEmail()
     {
-        return sex;
+        return email;
     }
 
-    public void setSex(String sex)
+    public void setEmail(String email)
     {
-        this.sex = sex;
+        this.email = email;
     }
 
-    public String getPhoto()
+    public Integer getTelNo()
     {
-        return photo;
+        return telNo;
     }
 
-    public void setPhoto(String photo)
+    public void setTelNo(Integer telNo)
     {
-        this.photo = photo;
+        this.telNo = telNo;
     }
 
-    public String getPersonalSign()
+    public String getDescription()
     {
-        return personalSign;
+        return description;
     }
 
-    public void setPersonalSign(String personalSign)
+    public void setDescription(String description)
     {
-        this.personalSign = personalSign;
-    }
-
-    public String getCollege()
-    {
-        return college;
-    }
-
-    public void setCollege(String college)
-    {
-        this.college = college;
+        this.description = description;
     }
 }
