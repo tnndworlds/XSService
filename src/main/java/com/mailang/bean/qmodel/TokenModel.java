@@ -7,11 +7,12 @@ import java.util.Date;
 
 public class TokenModel
 {
-    private static final Long MAX_EXPIRE_TIME = 600000L;
+    private static final Long MAX_EXPIRE_TIME = 6000000L;
     private String userId;
     private String token;
     private Long tokenTime;
     private UserEntity userEntity;
+    private Object userData;
 
     public TokenModel()
     {
@@ -72,6 +73,21 @@ public class TokenModel
             return true;
         }
         return false;
+    }
+
+    public static Long getMaxExpireTime()
+    {
+        return MAX_EXPIRE_TIME;
+    }
+
+    public Object getUserData()
+    {
+        return userData;
+    }
+
+    public void setUserData(Object userData)
+    {
+        this.userData = userData;
     }
 }
 

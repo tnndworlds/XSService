@@ -25,6 +25,9 @@ public class UserEntity
     @Column(colName="TEL_NO")
     private String telNo;
 
+    @Column(colName="TYPE")
+    private String type;
+
     @Column(colName="DESCRIPTION")
     private String description;
 
@@ -99,5 +102,15 @@ public class UserEntity
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
     }
 }

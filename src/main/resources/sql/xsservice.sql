@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2019-02-02 18:02:11
+Date: 2019-02-03 15:03:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1255,12 +1255,14 @@ CREATE TABLE `xs_dd_user` (
   `NAME` varchar(128) DEFAULT NULL,
   `EMAIL` varchar(128) DEFAULT NULL,
   `PASSWORD` varchar(255) DEFAULT NULL,
-  `TEL_NO` int(11) DEFAULT NULL,
+  `TEL_NO` varchar(32) DEFAULT NULL,
   `DESCRIPTION` varchar(1024) DEFAULT NULL,
+  `TYPE` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of xs_dd_user
 -- ----------------------------
-INSERT INTO `xs_dd_user` VALUES ('tnndworlds', '大蒜头', '727851644@qq.com', null, '1582909391', '心无意，誓必为');
+INSERT INTO `xs_dd_user` VALUES ('tnndworlds', '大蒜头', '727851644@qq.com', '111111', '1582909391', '心无意，誓必为', 'admin');
+INSERT INTO `xs_dd_user` VALUES ('xstodolist', '水风筝', null, 'xxxxxx', '12345678985', null, 'admin');

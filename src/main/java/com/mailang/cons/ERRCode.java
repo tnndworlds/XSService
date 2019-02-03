@@ -10,6 +10,6 @@ public class ERRCode
     public static final String DB_QUERY_ERROR = "40000002";
     public static final String DB_UPDATE_ERROR = "40000003";
     public static final String USERNAME_PASSOWR_EMPTY = "50000001";
-    public static final String USERNAME_PASSOWR_ERROR = "50000002";
+    public static final String USERNAME_PASSOWR_ERROR = "11000002";
 
 }
