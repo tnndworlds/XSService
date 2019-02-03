@@ -4,6 +4,7 @@ package com.mailang.jdbc.entity;
 import com.mailang.jdbc.persist.annotation.Column;
 import com.mailang.jdbc.persist.annotation.Id;
 import com.mailang.jdbc.persist.annotation.Table;
+import com.mailang.jdbc.persist.annotation.Transient;
 
 @Table(name="xs_dd_user", dataSource = "xsservice")
 public class UserEntity
@@ -22,10 +23,13 @@ public class UserEntity
     private String email;
 
     @Column(colName="TEL_NO")
-    private Integer telNo;
+    private String telNo;
 
     @Column(colName="DESCRIPTION")
     private String description;
+
+    @Transient
+    private String confirm;
 
     public String getId()
     {
@@ -67,14 +71,24 @@ public class UserEntity
         this.email = email;
     }
 
-    public Integer getTelNo()
+    public String getTelNo()
     {
         return telNo;
     }
 
-    public void setTelNo(Integer telNo)
+    public void setTelNo(String telNo)
     {
         this.telNo = telNo;
+    }
+
+    public String getConfirm()
+    {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm)
+    {
+        this.confirm = confirm;
     }
 
     public String getDescription()

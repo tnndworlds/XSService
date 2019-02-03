@@ -25,7 +25,7 @@ public class TokenController
     private static XSLogger LOG = XSLoggerFactory.getLogger(TokenController.class);
 
     @ResponseBody
-    @RequestMapping(value="register", method= RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/register", method= RequestMethod.POST, produces="application/json;charset=UTF-8")
     public RetMessage register(@RequestBody UserEntity userEntity)
     {
         RetMessage retMessage = new RetMessage();
@@ -54,27 +54,27 @@ public class TokenController
 
 
     @ResponseBody
-    @RequestMapping(value="login", method= RequestMethod.POST, produces="application/json;charset=UTF-8")
-    public RetMessage login(@RequestParam("userName")String userName, @RequestParam("password")String password)
+    @RequestMapping(value="/login", method= RequestMethod.POST, produces="application/json;charset=UTF-8")
+    public RetMessage login(@RequestBody UserEntity userEntity)
     {
         RetMessage retMessage = new RetMessage();
         try
         {
-            if (StringUtils.isBlank(userName) || StringUtils.isBlank(password))
+            if (StringUtils.isBlank(userEntity.getName()) || StringUtils.isBlank(userEntity.getPassword()))
             {
                 throw new XSException(ERRCode.USERNAME_PASSOWR_EMPTY);
             }
 
             //鉴权操作
-            UserEntity userEntity = AuthUtils.validUser(userName, password);
+           /* UserEntity userEntity = AuthUtils.validUser(userName, password);
             if (null == userEntity)
             {
                 throw new XSException(ERRCode.USERNAME_PASSOWR_ERROR);
             }
             TokenModel tokenModel = MapTokenManager.getInstance().createToken(userName);
-            tokenModel.setUserEntity(userEntity);
+            tokenModel.setUserEntity(userEntity);*/
             retMessage.setCode(ERRCode.SUCCESS);
-            retMessage.setData(tokenModel);
+            //retMessage.setData(tokenModel);
             return retMessage;
         }
         catch (XSException e)
@@ -95,7 +95,7 @@ public class TokenController
 
     @ResponseBody
     @Authorization
-    @RequestMapping(method= RequestMethod.DELETE, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/logout", method= RequestMethod.DELETE, produces="application/json;charset=UTF-8")
     public RetMessage logout(@RequestParam("userName")String userName)
     {
         RetMessage retMessage = new RetMessage();
