@@ -4,47 +4,85 @@ import com.mailang.bean.qmodel.Authorization;
 import com.mailang.bean.qmodel.RetMessage;
 import com.mailang.bean.qmodel.TokenModel;
 import com.mailang.cons.ERRCode;
+import com.mailang.cons.XSCons;
+import com.mailang.jdbc.dao.UserDao;
 import com.mailang.jdbc.entity.UserEntity;
+import com.mailang.jdbc.persist.DBUtils;
 import com.mailang.log.XSLogger;
 import com.mailang.log.XSLoggerFactory;
+import com.mailang.tquery.TemplateDataProvider;
 import com.mailang.user.MapTokenManager;
 import com.mailang.utils.AuthUtils;
+import com.mailang.utils.SpringUtils;
 import com.mailang.utils.Utils;
 import com.mailang.xsexception.XSException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
-@RequestMapping(value = "rest/tokens")
+@RequestMapping(value = "rest/user")
 public class TokenController
 {
     private static XSLogger LOG = XSLoggerFactory.getLogger(TokenController.class);
 
+    @Autowired
+    private UserDao userDao;
+
     @ResponseBody
-    @RequestMapping(method= RequestMethod.POST, produces="application/json;charset=UTF-8")
-    public RetMessage login(@RequestParam("userName")String userName, @RequestParam("password")String password)
+    @RequestMapping(value="/register", method= RequestMethod.POST, produces="application/json;charset=UTF-8")
+    public RetMessage register(@RequestBody UserEntity userEntity)
     {
         RetMessage retMessage = new RetMessage();
         try
         {
-            if (StringUtils.isBlank(userName) || StringUtils.isBlank(password))
+            UserDao userDao = SpringUtils.getBeanByClass(UserDao.class);
+            userDao.register(userEntity);
+            retMessage.setCode(ERRCode.SUCCESS);
+            return retMessage;
+        }
+        catch (XSException e)
+        {
+            LOG.error("XSError. Msg: {}.", e.getMessage());
+            retMessage.setCode(e.getErrCode());
+            retMessage.setMsg(e.getMessage());
+            return retMessage;
+        }
+        catch (Exception e1)
+        {
+            LOG.error("Error. Msg: {}.", Utils.getStackTrace(e1));
+            retMessage.setCode(ERRCode.UNKNOW_EXCEPTION);
+            retMessage.setMsg(Utils.getStackTrace(e1));
+            return retMessage;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value="/login", method= RequestMethod.POST, produces="application/json;charset=UTF-8")
+    public RetMessage login(@RequestBody UserEntity userEntity)
+    {
+        RetMessage retMessage = new RetMessage();
+        try
+        {
+            if (StringUtils.isBlank(userEntity.getName()) || StringUtils.isBlank(userEntity.getPassword()))
             {
                 throw new XSException(ERRCode.USERNAME_PASSOWR_EMPTY);
             }
 
             //鉴权操作
-            UserEntity userEntity = AuthUtils.validUser(userName, password);
-            if (null == userEntity)
+            UserEntity validUser = AuthUtils.validUser(userEntity.getName(), userEntity.getPassword());
+            if (null == validUser)
             {
                 throw new XSException(ERRCode.USERNAME_PASSOWR_ERROR);
             }
-            TokenModel tokenModel = MapTokenManager.getInstance().createToken(userName);
-            tokenModel.setUserEntity(userEntity);
+            TokenModel tokenModel = MapTokenManager.getInstance().createToken(userEntity.getName());
+            tokenModel.setUserEntity(validUser);
             retMessage.setCode(ERRCode.SUCCESS);
             retMessage.setData(tokenModel);
             return retMessage;
@@ -67,7 +105,40 @@ public class TokenController
 
     @ResponseBody
     @Authorization
-    @RequestMapping(method= RequestMethod.DELETE, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/currentUser", method= RequestMethod.GET, produces="application/json;charset=UTF-8")
+    public RetMessage getUser(@RequestParam("userId")String userId)
+    {
+        RetMessage retMessage = new RetMessage();
+        try
+        {
+            //鉴权操作
+            Map<String, Object> dataMap = userDao.queryById(userId);
+            if (null == dataMap)
+            {
+                throw new XSException(ERRCode.USERNAME_PASSOWR_ERROR);
+            }
+
+            retMessage.setCode(ERRCode.SUCCESS);
+            retMessage.setData(DBUtils.getEntity(UserEntity.class, dataMap));
+            return retMessage;
+        }
+        catch (XSException e)
+        {
+            retMessage.setCode(e.getErrCode());
+            retMessage.setMsg(e.getMessage());
+            return retMessage;
+        }
+        catch (Exception e1)
+        {
+            retMessage.setCode(ERRCode.UNKNOW_EXCEPTION);
+            retMessage.setMsg(Utils.getStackTrace(e1));
+            return retMessage;
+        }
+    }
+
+    @ResponseBody
+    @Authorization
+    @RequestMapping(value = "/logout", method= RequestMethod.DELETE, produces="application/json;charset=UTF-8")
     public RetMessage logout(@RequestParam("userName")String userName)
     {
         RetMessage retMessage = new RetMessage();

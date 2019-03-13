@@ -10,14 +10,6 @@ import net.sf.json.JSONObject;
 import java.io.File;
 import java.io.StringWriter;
 
-/**
- * 常用JSON操作方法
- *
- * @Description: [json操作类]
- * @Author:      [c00241496]
- * @Date:        [2017/9/20]
- * @Version:     [iManagerU2000V200R018C10]
- */
 public class JsonUtil
 {
 

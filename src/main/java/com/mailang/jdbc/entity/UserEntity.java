@@ -4,8 +4,9 @@ package com.mailang.jdbc.entity;
 import com.mailang.jdbc.persist.annotation.Column;
 import com.mailang.jdbc.persist.annotation.Id;
 import com.mailang.jdbc.persist.annotation.Table;
+import com.mailang.jdbc.persist.annotation.Transient;
 
-@Table(name="tbl_xs_users", dataSource = "xsbook")
+@Table(name="xs_dd_user", dataSource = "xsservice")
 public class UserEntity
 {
 	@Id
@@ -17,18 +18,21 @@ public class UserEntity
 
     @Column(colName="PASSWORD")
     private String password;
-	
-	@Column(colName="SEX")
-	private String sex;
 
-	@Column(colName="PHOTO")
-	private String photo;
-	
-	@Column(colName="PERSONAL_SIGN")
-	private String personalSign;
+    @Column(colName="EMAIL")
+    private String email;
 
-    @Column(colName="COLLEGE")
-    private String college;
+    @Column(colName="TEL_NO")
+    private String telNo;
+
+    @Column(colName="TYPE")
+    private String type;
+
+    @Column(colName="DESCRIPTION")
+    private String description;
+
+    @Transient
+    private String confirm;
 
     public String getId()
     {
@@ -60,43 +64,53 @@ public class UserEntity
         this.password = password;
     }
 
-    public String getSex()
+    public String getEmail()
     {
-        return sex;
+        return email;
     }
 
-    public void setSex(String sex)
+    public void setEmail(String email)
     {
-        this.sex = sex;
+        this.email = email;
     }
 
-    public String getPhoto()
+    public String getTelNo()
     {
-        return photo;
+        return telNo;
     }
 
-    public void setPhoto(String photo)
+    public void setTelNo(String telNo)
     {
-        this.photo = photo;
+        this.telNo = telNo;
     }
 
-    public String getPersonalSign()
+    public String getConfirm()
     {
-        return personalSign;
+        return confirm;
     }
 
-    public void setPersonalSign(String personalSign)
+    public void setConfirm(String confirm)
     {
-        this.personalSign = personalSign;
+        this.confirm = confirm;
     }
 
-    public String getCollege()
+    public String getDescription()
     {
-        return college;
+        return description;
     }
 
-    public void setCollege(String college)
+    public void setDescription(String description)
     {
-        this.college = college;
+        this.description = description;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
     }
 }

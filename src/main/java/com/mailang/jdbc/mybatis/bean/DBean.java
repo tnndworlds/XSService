@@ -1,4 +1,5 @@
 package com.mailang.jdbc.mybatis.bean;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ public class DBean
     private String sql;
     
     private Object id;
+
+    private Object primaryValue;
 
     public Class<?> getClazz()
     {
@@ -81,5 +84,15 @@ public class DBean
     public void setSql(String sql)
     {
         this.sql = sql;
+    }
+
+    public Object getPrimaryValue()
+    {
+        return primaryValue;
+    }
+
+    public void setPrimaryValue(Object primaryValue)
+    {
+        this.primaryValue = primaryValue;
     }
 }
