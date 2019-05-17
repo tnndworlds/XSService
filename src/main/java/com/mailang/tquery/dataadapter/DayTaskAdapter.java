@@ -37,10 +37,10 @@ public class DayTaskAdapter implements DataAdapter
     private boolean showTask(Map<String, Object> dataMap)
     {
         DDTaskEntity ddTaskEntity = DBUtils.getEntity(DDTaskEntity.class, dataMap);
-        switch (ddTaskEntity.getType())
+        switch (ddTaskEntity.getTaskType())
         {
             case 1:  //周期任务
-                return TaskPolicyEnum.todayIsEffect(ddTaskEntity.getPolicy(), ddTaskEntity.getPolicyParam());
+                return TaskPolicyEnum.todayIsEffect(String.valueOf(ddTaskEntity.getPolicy()), ddTaskEntity.getPolicyParam());
             case 2:  //目标任务
             case 3:  //快速任务
                 return DateTime.isToday(ddTaskEntity.getPolicyParam());

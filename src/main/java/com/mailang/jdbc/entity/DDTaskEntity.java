@@ -5,57 +5,65 @@ import com.mailang.jdbc.persist.annotation.Id;
 import com.mailang.jdbc.persist.annotation.SequenceGenerator;
 import com.mailang.jdbc.persist.annotation.Table;
 
-/**
- * <一句话功能简述>
- * <功能详细描述>
- *
- * @Author c00241496
- * @Version [OSS Dashboard v1.0]
- * @Date 2019/1/28
- */
-@Table(name="TBL_XS_SYSTEM_LOG")
+@Table(name="XS_DD_TASK")
 public class DDTaskEntity
 {
     @Id
-    @SequenceGenerator
     @Column(colName="ID")
-    private String id;
+    @SequenceGenerator
+    private String ID;
 
-    @Column(colName="USER")
+    @Column(colName = "USER")
     private String user;
 
-    @Column(colName="TYPE")
-    private Integer type;
-
-    @Column(colName="NAME")
+    @Column(colName = "NAME")
     private String name;
 
-    @Column(colName="TAGS")
-    private String tags;
+    @Column(colName = "POLICY")
+    private Integer policy;
 
-    @Column(colName="POLICY")
-    private String policy;
-
-    @Column(colName="PRIORITY")
+    @Column(colName = "PRIORITY")
     private Integer priority;
 
-    @Column(colName="POLICY_PARAM")
+    @Column(colName = "POLICY_PARAM")
     private String policyParam;
 
-    @Column(colName="COUNT")
+    @Column(colName = "COUNT")
     private Integer count;
 
-    @Column(colName="UNIT")
+    @Column(colName = "UNIT")
     private String unit;
 
-    public String getId()
+    @Column(colName = "REMARK")
+    private String remark;
+
+    @Column(colName = "DESCRIPTION")
+    private String description;
+
+    @Column(colName = "TASK_TYPE")
+    private Integer taskType;
+
+    @Column(colName = "TODO")
+    private Boolean todo;
+
+    public Integer getTaskType()
     {
-        return id;
+        return taskType;
     }
 
-    public void setId(String id)
+    public void setTaskType(Integer taskType)
     {
-        this.id = id;
+        this.taskType = taskType;
+    }
+
+    public String getID()
+    {
+        return ID;
+    }
+
+    public void setID(String ID)
+    {
+        this.ID = ID;
     }
 
     public String getUser()
@@ -68,16 +76,6 @@ public class DDTaskEntity
         this.user = user;
     }
 
-    public Integer getType()
-    {
-        return type;
-    }
-
-    public void setType(Integer type)
-    {
-        this.type = type;
-    }
-
     public String getName()
     {
         return name;
@@ -88,22 +86,12 @@ public class DDTaskEntity
         this.name = name;
     }
 
-    public String getTags()
-    {
-        return tags;
-    }
-
-    public void setTags(String tags)
-    {
-        this.tags = tags;
-    }
-
-    public String getPolicy()
+    public Integer getPolicy()
     {
         return policy;
     }
 
-    public void setPolicy(String policy)
+    public void setPolicy(Integer policy)
     {
         this.policy = policy;
     }
@@ -147,4 +135,25 @@ public class DDTaskEntity
     {
         this.unit = unit;
     }
+
+    public String getRemark()
+    {
+        return remark;
+    }
+
+    public void setRemark(String remark)
+    {
+        this.remark = remark;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
 }

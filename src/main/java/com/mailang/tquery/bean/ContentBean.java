@@ -10,6 +10,7 @@ public class ContentBean
 	private String value;
 	private String dataAdapter;
 	private String sysParam;
+	private String plugin;
 
 	public String getKey()
 	{
@@ -59,6 +60,16 @@ public class ContentBean
 	public void setSysParam(String sysParam)
 	{
 		this.sysParam = sysParam;
+	}
+
+	public String getPlugin()
+	{
+		return plugin;
+	}
+
+	public void setPlugin(String plugin)
+	{
+		this.plugin = plugin;
 	}
 
 	@Override

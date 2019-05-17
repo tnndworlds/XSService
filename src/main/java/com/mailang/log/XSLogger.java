@@ -14,9 +14,15 @@ import java.util.List;
 public class XSLogger
 {
     private Logger LOG;
-    public XSLogger(Class clazz)
+
+    private XSLogger(Class clazz)
     {
         LOG = LoggerFactory.getLogger(clazz);
+    }
+
+    public static XSLogger getLogger(Class clazz)
+    {
+        return new XSLogger(clazz);
     }
 
     /**
@@ -47,6 +53,26 @@ public class XSLogger
     }
 
     public void warn(String format, String...args)
+    {
+        LOG.warn(format, args);
+    }
+
+    public void xdebug(String format, String...args)
+    {
+        LOG.debug(format, args);
+    }
+
+    public void xinfo(String format, String...args)
+    {
+        LOG.info(format, args);
+    }
+
+    public void xerror(String format, String...args)
+    {
+        LOG.error(format, args);
+    }
+
+    public void xwarn(String format, String...args)
     {
         LOG.warn(format, args);
     }

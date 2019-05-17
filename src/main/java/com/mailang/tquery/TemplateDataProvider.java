@@ -1,25 +1,21 @@
 package com.mailang.tquery;
 
 import com.mailang.cons.ERRCode;
-import com.mailang.cons.XSCons;
 import com.mailang.jdbc.mybatis.SQLDao;
 import com.mailang.tquery.bean.ContentBean;
 import com.mailang.tquery.codedata.ICODEData;
 import com.mailang.tquery.dataadapter.DataAdapter;
 import com.mailang.tquery.uenum.GetTypeEnum;
 import com.mailang.utils.FreemarkerAdapter;
-import com.mailang.utils.SYSCfg;
 import com.mailang.utils.SpringUtils;
 import com.mailang.utils.Utils;
 import com.mailang.xsexception.XSException;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -29,18 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 模板数据提供实现
- * 作者： chengsongsong
- * 类名：org.sony.utilsTemplateDataProvider
- * 版本：[V01R01C01]
- * 日期：2017年2月5日
- */
 public class TemplateDataProvider
 {
 	private static final Logger LOG = LoggerFactory.getLogger(TemplateDataProvider.class);
 	
-	private static SQLDao sqlExector = null;
+	private static SQLDao sqlExecutor = null;
 	
 	private static Map<String, List<ContentBean>> modulesMap = new HashMap<String, List<ContentBean>>();
 	
@@ -52,17 +41,18 @@ public class TemplateDataProvider
 	private static final String XML_TYPE = "type";
 	private static final String XML_VALUE = "value";
 	private static final String XML_DATA_ADAPTER = "dataAdapter";
-	private static final String XML_SYS_PARAM = "sysParam";
-	
-	/**
-	 * 模板加载
-	 * ->能够递归加载
-	 * ->仅解析xml
-	 */
+	private static final String XML_PLUGIN = "plugin";
+
 	static {
-		URL templateUrl = TemplateDataProvider.class.getClassLoader().getResource("/template");
+		initTemplate();
+		sqlExecutor = SpringUtils.getBeanByClass(SQLDao.class);
+	}
+
+	public static void initTemplate(){
 		try
 		{
+			URL templateUrl = TemplateDataProvider.class.getClassLoader().getResource("/template");
+			modulesMap.clear();
 			String path = URLDecoder.decode(templateUrl.getPath(), "UTF-8");
 			File templateDirFile = new File(path);
 			loadTemplateFile(templateDirFile, true);
@@ -72,7 +62,6 @@ public class TemplateDataProvider
 		{
 			LOG.error("Init Failed.");
 		}
-		sqlExector = SpringUtils.getBeanByClass(SQLDao.class);
 	}
 	
 	private static void loadTemplateFile(File templateDirFile, boolean isRecursion)
@@ -121,7 +110,7 @@ public class TemplateDataProvider
 					tmpConBean.setGetType(GetTypeEnum.getType(Utils.getXMLElementValue(conEle.element(XML_TYPE))));
 					tmpConBean.setValue(Utils.getXMLElementValue(conEle.element(XML_VALUE)));
 					tmpConBean.setDataAdapter(Utils.getXMLElementValue(conEle.element(XML_DATA_ADAPTER)));
-					tmpConBean.setSysParam(Utils.getXMLElementValue(conEle.element(XML_SYS_PARAM)));
+					tmpConBean.setPlugin(Utils.getXMLElementValue(conEle.element(XML_PLUGIN)));
 					moduleContentList.add(tmpConBean);
 				}
 				modulesMap.put(moduleName, moduleContentList);
@@ -141,7 +130,7 @@ public class TemplateDataProvider
 	 * @param paramMap
 	 * @return
 	 */
-	public static synchronized Object getResult(String moduleName, String userId, Map<String, Object> paramMap)
+	public static Object getResult(String moduleName, Map<String, Object> paramMap)
 	{
 		List<ContentBean> contentList = modulesMap.get(moduleName);
 		if (null == contentList || contentList.isEmpty())
@@ -152,37 +141,19 @@ public class TemplateDataProvider
 		JSONObject retObj = new JSONObject();
 		for (ContentBean contentBean : contentList)
 		{
-			retObj.put(contentBean.getKey(), getContentValue(contentBean, userId, paramMap));
+			retObj.put(contentBean.getKey(), getContentValue(contentBean, paramMap));
 		}
 		
 		return retObj;
 	}
 	
-	private static Object getContentValue(ContentBean contentBean, String userId, Map<String, Object> paramMap)
+	private static Object getContentValue(ContentBean contentBean, Map<String, Object> paramMap)
 	{
 		switch (contentBean.getGetType())
 		{
 			case SQL:
-				Map<String, Object> allParamMap = new HashMap<String, Object>();
-				allParamMap.putAll(paramMap);
-				/**
-				 * module1:key;module2:key
-				 */
-				if (StringUtils.isNotBlank(contentBean.getSysParam()))
-				{
-					String[] keys = contentBean.getSysParam().split(XSCons.SEMICOLON);
-					for (String key : keys)
-					{
-						if (key.split(XSCons.COLON).length != 2)
-						{
-							continue;
-						}
-						allParamMap.put(key, SYSCfg.getValue(userId, key.split(XSCons.COLON)[0], key.split(XSCons.COLON)[1]));
-					}
-				}
-
-				String sqlStr = FreemarkerAdapter.getInstance().getResult(contentBean.getValue(), allParamMap);
-				List<Map<String, Object>> queryResult = sqlExector.queryBySql(sqlStr);
+				String sqlStr = FreemarkerAdapter.getInstance().getResult(contentBean.getValue(), paramMap);
+				List<Map<String, Object>> queryResult = sqlExecutor.queryBySql(sqlStr);
 				String dataAdapterStr = contentBean.getDataAdapter();
 				if (!(null == dataAdapterStr || dataAdapterStr.isEmpty()))
 				{
@@ -197,8 +168,6 @@ public class TemplateDataProvider
 					}
 				}
 				return queryResult;
-			case DIRECT:
-				return contentBean.getValue();
 			case JSON:
 				try
 				{
