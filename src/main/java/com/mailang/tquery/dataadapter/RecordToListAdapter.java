@@ -2,7 +2,6 @@ package com.mailang.tquery.dataadapter;
 
 import com.mailang.cons.XSCons;
 import com.mailang.log.XSLogger;
-import com.mailang.log.XSLoggerFactory;
 import com.mailang.tquery.bean.ContentBean;
 import net.sf.json.JSONArray;
 
@@ -11,7 +10,7 @@ import java.util.Map;
 
 public class RecordToListAdapter implements DataAdapter
 {
-    private static XSLogger LOG = XSLoggerFactory.getLogger(RecordToListAdapter.class);
+    private static XSLogger LOG = XSLogger.getLogger(RecordToListAdapter.class);
 
     @Override
     public Object adapter(ContentBean contentBean, List<Map<String, Object>> dataList)

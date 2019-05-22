@@ -8,12 +8,13 @@ import com.mailang.tquery.TemplateDataProvider;
 import com.mailang.utils.JSONUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
 import java.util.List;
 import java.util.Map;
 
-public class CycleTask implements DTask
+public class TagsTask implements DTask
 {
-    private static String MODULE_ID = "CycleTasks";
+    private static String MODULE_ID = "TagsTask";
 
     private static XSLogger LOG = XSLogger.getLogger(CycleTask.class);
 
@@ -31,7 +32,7 @@ public class CycleTask implements DTask
                 JSONObject data = dataList.getJSONObject(i);
 
                 //过滤器
-                data.put(XSCons.TYPE, TaskTypeEnum.CYCLE.getTaskType());
+                data.put(XSCons.TYPE, TaskTypeEnum.TAGS.getTaskType());
                 taskList.add(data);
             }
         }

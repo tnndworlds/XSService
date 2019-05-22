@@ -1,11 +1,7 @@
 package com.mailang.rest;
 
 import com.mailang.log.XSLogger;
-import com.mailang.log.XSLoggerFactory;
-import com.mailang.tquery.TemplateDataProvider;
 import com.mailang.utils.PROP;
-import com.mailang.utils.Utils;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,15 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("rest")
 public class XSFileUpload
 {
-    private static XSLogger LOG = XSLoggerFactory.getLogger(XSFileUpload.class);
+    private static XSLogger LOG = XSLogger.getLogger(XSFileUpload.class);
     @ResponseBody
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String upload(@RequestParam(value = "file") CommonsMultipartFile file,

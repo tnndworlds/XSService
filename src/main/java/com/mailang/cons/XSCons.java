@@ -5,6 +5,8 @@ public class XSCons
 
     public static final String AUTHORIZATION = "token";
 
+    public static final String TYPE = "type";
+
     public static final String USER_ID = "userId";
 
     public static final String SYSTEM = "SYSTEM";

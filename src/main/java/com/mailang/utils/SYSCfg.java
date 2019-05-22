@@ -6,7 +6,6 @@ import com.mailang.jdbc.entity.SYSCfgEntity;
 import com.mailang.jdbc.mybatis.bean.QCondition;
 import com.mailang.jdbc.persist.DBUtils;
 import com.mailang.log.XSLogger;
-import com.mailang.log.XSLoggerFactory;
 import com.mailang.xsexception.XSException;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 public class SYSCfg
 {
-    private static XSLogger LOG = XSLoggerFactory.getLogger(SYSCfg.class);
+    private static XSLogger LOG = XSLogger.getLogger(SYSCfg.class);
 
     private static Map<String, Map<String, SYSCfgEntity>> userCFGMap = new HashedMap();
 

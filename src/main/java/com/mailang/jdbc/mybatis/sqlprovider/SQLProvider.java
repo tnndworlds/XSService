@@ -9,10 +9,7 @@ import com.mailang.jdbc.persist.TableFactory;
 import com.mailang.jdbc.persist.meta.ColumnMeta;
 import com.mailang.jdbc.persist.meta.TableMeta;
 import com.mailang.log.XSLogger;
-import com.mailang.log.XSLoggerFactory;
-import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +25,7 @@ import java.util.Set;
  */
 public class SQLProvider
 {
-    private static XSLogger LOG = XSLoggerFactory.getLogger(SQLProvider.class);
+    private static XSLogger LOG = XSLogger.getLogger(SQLProvider.class);
     /**
      * 原生SQL执行提供方法，作SQL透传
      *

@@ -1,12 +1,5 @@
 package com.mailang.jdbc.mybatis;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.mailang.cons.ERRCode;
 import com.mailang.jdbc.mybatis.bean.DBean;
 import com.mailang.jdbc.mybatis.bean.QCondition;
@@ -16,10 +9,15 @@ import com.mailang.jdbc.persist.TableFactory;
 import com.mailang.jdbc.persist.meta.ColumnMeta;
 import com.mailang.jdbc.persist.meta.TableMeta;
 import com.mailang.log.XSLogger;
-import com.mailang.log.XSLoggerFactory;
 import com.mailang.xsexception.XSException;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 实体类数据库访问公共抽象方法
@@ -29,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class AbstractDao<T>
 {
-	private static XSLogger LOG = XSLoggerFactory.getLogger(AbstractDao.class);
+	private static XSLogger LOG = XSLogger.getLogger(AbstractDao.class);
 	
 	@Autowired
 	protected AbstractDaoMapper abstractDaoMapper;

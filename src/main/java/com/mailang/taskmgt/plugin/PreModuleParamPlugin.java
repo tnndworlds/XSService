@@ -28,7 +28,7 @@ public class PreModuleParamPlugin implements ParamPlugin
             }
             try
             {
-                Object tObject = TemplateDataProvider.getResult(module, null, paramMap);
+                Object tObject = TemplateDataProvider.getResult(module, paramMap);
                 JSONObject params = JSONUtils.getJSONByKeyPath(JSONObject.fromObject(tObject), "data");
                 paramMap.putAll(params);
             }

@@ -35,7 +35,7 @@ public class PostModuleSqlPlugin implements ParamPlugin
             }
             try
             {
-                Object tObject = TemplateDataProvider.getResult(module, null, paramMap);
+                Object tObject = TemplateDataProvider.getResult(module, paramMap);
                 String sqlStr = JSONUtils.getValueByKeyPath(JSONObject.fromObject(tObject), "data").toString();
                 sqlExector.executeSql(sqlStr);
             }

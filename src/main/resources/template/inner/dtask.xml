@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <viewTemplate>
     <module>
-        <name>queryTodos</name>
+        <name>CycleTasks</name>
         <contents>
             <content>
-                <key>tags</key>
-                <sysParam></sysParam>
-                <type>SQL</type>
-                <value>
-                    <![CDATA[
-						SELECT *, NAME AS text FROM XS_DD_TAGS WHERE USER='${userId}';
-					]]>
-                </value>
-                <dataAdapter></dataAdapter>
-            </content>
-            <content>
-                <key>dTask</key>
+                <key>data</key>
                 <sysParam></sysParam>
                 <type>SQL</type>
                 <value>
                     <![CDATA[
 						SELECT * FROM XS_DD_TASK WHERE USER='${userId}' ;
+					]]>
+                </value>
+                <dataAdapter></dataAdapter>
+            </content>
+        </contents>
+    </module>
+
+    <module>
+        <name>TagsTask</name>
+        <contents>
+            <content>
+                <key>data</key>
+                <sysParam></sysParam>
+                <type>SQL</type>
+                <value>
+                    <![CDATA[
+						SELECT * FROM XS_DD_TAGS WHERE USER='${userId}' ;
 					]]>
                 </value>
                 <dataAdapter></dataAdapter>
