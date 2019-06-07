@@ -25,6 +25,7 @@ public class DateTime
         return Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
     }
 
+
     public static void main(String[]args)
     {
         System.out.println(todayOfWeek());

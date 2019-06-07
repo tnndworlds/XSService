@@ -1,19 +1,24 @@
 package com.mailang.ddtask.task;
 
-import com.mailang.bean.pojo.DTaskBean;
+import com.mailang.bean.qmodel.PunchModel;
 import com.mailang.cons.XSCons;
 import com.mailang.ddtask.TaskTypeEnum;
+import com.mailang.ddtask.filter.CycleFilter;
+import com.mailang.ddtask.filter.DataFilter;
 import com.mailang.log.XSLogger;
 import com.mailang.tquery.TemplateDataProvider;
 import com.mailang.utils.JSONUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
 import java.util.List;
 import java.util.Map;
 
 public class CycleTask implements DTask
 {
     private static String MODULE_ID = "CycleTasks";
+
+    private DataFilter dataFilter = new CycleFilter();
 
     private static XSLogger LOG = XSLogger.getLogger(CycleTask.class);
 
@@ -29,7 +34,10 @@ public class CycleTask implements DTask
             for (int i = 0; i < dataList.size(); i++)
             {
                 JSONObject data = dataList.getJSONObject(i);
-
+                if (!dataFilter.dataFilter(data))
+                {
+                    continue;
+                }
                 //过滤器
                 data.put(XSCons.TYPE, TaskTypeEnum.CYCLE.getTaskType());
                 taskList.add(data);
@@ -42,8 +50,9 @@ public class CycleTask implements DTask
     }
 
     @Override
-    public boolean punch(DTaskBean data)
+    public boolean punch(PunchModel data)
     {
+
         return true;
     }
 }

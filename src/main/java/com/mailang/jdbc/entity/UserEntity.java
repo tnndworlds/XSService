@@ -1,15 +1,13 @@
 package com.mailang.jdbc.entity;
 
 
-import com.mailang.jdbc.persist.annotation.Column;
-import com.mailang.jdbc.persist.annotation.Id;
-import com.mailang.jdbc.persist.annotation.Table;
-import com.mailang.jdbc.persist.annotation.Transient;
+import com.mailang.jdbc.persist.annotation.*;
 
-@Table(name="xs_dd_user", dataSource = "xsservice")
+@Table(name="XS_DD_USER", dataSource = "xsservice")
 public class UserEntity
 {
 	@Id
+    @SequenceGenerator
 	@Column(colName="ID")
 	private String id;
 	
@@ -28,11 +26,14 @@ public class UserEntity
     @Column(colName="TYPE")
     private String type;
 
+    @Column(colName="CREATE_TIME")
+    private String createTime;
+
+    @Column(colName="UPDATE_TIME")
+    private String updateTime;
+
     @Column(colName="DESCRIPTION")
     private String description;
-
-    @Transient
-    private String confirm;
 
     public String getId()
     {
@@ -84,14 +85,24 @@ public class UserEntity
         this.telNo = telNo;
     }
 
-    public String getConfirm()
+    public String getCreateTime()
     {
-        return confirm;
+        return createTime;
     }
 
-    public void setConfirm(String confirm)
+    public void setCreateTime(String createTime)
     {
-        this.confirm = confirm;
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime()
+    {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime)
+    {
+        this.updateTime = updateTime;
     }
 
     public String getDescription()

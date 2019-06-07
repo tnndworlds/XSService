@@ -29,4 +29,7 @@ public interface AbstractDaoMapper
 
     @SelectProvider(type=SQLProvider.class, method="deleteById")
     void deleteById(DBean reqBean);
+
+    @SelectProvider(type=SQLProvider.class, method="delete")
+    void delete(DBean reqBean);
 }

@@ -229,4 +229,19 @@ public abstract class AbstractDao<T>
 			throw new XSException(ERRCode.DB_SAVE_ERROR, this.entityClass.getName(), id);
 		}
 	}
+
+	public void delete(List<QCondition> conditionList)
+	{
+		DBean dbean = new DBean();
+		dbean.setClazz(entityClass);
+		dbean.setConList(conditionList);
+		try
+		{
+			this.abstractDaoMapper.delete(dbean);
+		}
+		catch (Exception e)
+		{
+			throw new XSException(ERRCode.DB_DELETE_ERROR);
+		}
+	}
 }

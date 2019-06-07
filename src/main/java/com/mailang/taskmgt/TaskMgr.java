@@ -8,7 +8,9 @@ import com.mailang.utils.SpringUtils;
 import com.mailang.xsexception.XSException;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+
 import java.util.*;
+
 import static org.quartz.JobBuilder.newJob;
 
 /**
@@ -48,8 +50,16 @@ public class TaskMgr
         {
             scheduler = schedulerFactory.getScheduler();
             scheduler.start();
-
+            final String temp = "css";
             List<JOBEntity> jobList = jobDao.queryRetEntity(new ArrayList<QCondition>());
+
+
+            jobList.stream().filter(item->{
+                String aa = "b" + temp;
+                return true;
+            });
+
+
             for (JOBEntity entity : jobList)
             {
                 jobs.put(entity.getId(), getJobDetail(entity));

@@ -1,6 +1,5 @@
 package com.mailang.jdbc.dao;
 
-import ch.qos.logback.core.db.dialect.DBUtil;
 import com.mailang.jdbc.entity.UserEntity;
 import com.mailang.jdbc.mybatis.AbstractDao;
 import com.mailang.jdbc.persist.DBUtils;

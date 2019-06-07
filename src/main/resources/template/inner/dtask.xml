@@ -9,7 +9,7 @@
                 <type>SQL</type>
                 <value>
                     <![CDATA[
-						SELECT * FROM XS_DD_TASK WHERE USER='${userId}' ;
+						SELECT * FROM XS_DD_TASK WHERE USER_ID='${userId}' ;
 					]]>
                 </value>
                 <dataAdapter></dataAdapter>
@@ -26,7 +26,7 @@
                 <type>SQL</type>
                 <value>
                     <![CDATA[
-						SELECT * FROM XS_DD_TAGS WHERE USER='${userId}' ;
+						SELECT * FROM XS_DD_TAGS WHERE USER_ID='${userId}' ;
 					]]>
                 </value>
                 <dataAdapter></dataAdapter>

@@ -1,6 +1,7 @@
 package com.mailang.ddtask.task;
 
 import com.mailang.bean.pojo.DTaskBean;
+import com.mailang.bean.qmodel.PunchModel;
 import com.mailang.cons.XSCons;
 import com.mailang.ddtask.TaskTypeEnum;
 import com.mailang.log.XSLogger;
@@ -26,15 +27,7 @@ public class TagsTask implements DTask
         {
             JSONObject jsonData = JSONObject.fromObject(retData);
             JSONArray dataList = JSONUtils.getArrayByKeyPath(jsonData, "data");
-            //数据适配器
-            for (int i = 0; i < dataList.size(); i++)
-            {
-                JSONObject data = dataList.getJSONObject(i);
-
-                //过滤器
-                data.put(XSCons.TYPE, TaskTypeEnum.TAGS.getTaskType());
-                taskList.add(data);
-            }
+            taskList.addAll(dataList);
         }
         catch (Exception e)
         {
@@ -43,7 +36,7 @@ public class TagsTask implements DTask
     }
 
     @Override
-    public boolean punch(DTaskBean data)
+    public boolean punch(PunchModel data)
     {
         return true;
     }

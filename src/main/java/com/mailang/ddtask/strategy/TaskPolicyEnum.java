@@ -1,4 +1,4 @@
-package com.mailang.ddtask;
+package com.mailang.ddtask.strategy;
 
 import com.mailang.utils.DateTime;
 

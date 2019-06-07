@@ -1,6 +1,7 @@
 package com.mailang.ddtask;
 
 import com.mailang.bean.qmodel.DTaskModel;
+import com.mailang.bean.qmodel.PunchModel;
 import com.mailang.cons.XSCons;
 import com.mailang.ddtask.task.CycleTask;
 import com.mailang.ddtask.task.DTask;
@@ -24,20 +25,20 @@ public class DTaskMgr
         paramMap.put(XSCons.USER_ID, userId);
         cycleTask.createTask(retList, paramMap);
         tagsTask.createTask(retList, paramMap);
-        quickTask.createTask(retList, paramMap);
+        //quickTask.createTask(retList, paramMap);
         return  retList;
     }
 
-    public boolean punch(DTaskModel punchModel)
+    public boolean punch(PunchModel punchModel)
     {
-        switch (TaskTypeEnum.getTaskTypeEnum(punchModel.getTaskType()))
+        switch (TaskTypeEnum.getTaskTypeEnum(punchModel.getPunchType()))
         {
             case CYCLE:
-                return cycleTask.punch(punchModel.getData());
+                return cycleTask.punch(punchModel);
             case TAGS:
-                return tagsTask.punch(punchModel.getData());
+                return tagsTask.punch(punchModel);
             case QUICK:
-                return quickTask.punch(punchModel.getData());
+                return quickTask.punch(punchModel);
         }
         return false;
     }

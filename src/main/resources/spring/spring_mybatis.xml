@@ -3,8 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-
-
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
     <tx:annotation-driven transaction-manager="transactionManager" order="400"></tx:annotation-driven>
 
@@ -47,11 +45,23 @@
         <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
     </bean>
 
-    <bean id="punchDataDao" class="com.mailang.jdbc.dao.PunchDataDao">
+    <bean id="punchDao" class="com.mailang.jdbc.dao.PunchDao">
         <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
     </bean>
 
-    <bean id="ddTaskDao" class="com.mailang.jdbc.dao.DDTaskDao">
+    <bean id="goalDao" class="com.mailang.jdbc.dao.GoalDao">
+        <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+    </bean>
+
+    <bean id="tagDao" class="com.mailang.jdbc.dao.TagDao">
+        <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+    </bean>
+
+    <bean id="qTaskDao" class="com.mailang.jdbc.dao.QTaskDao">
+        <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
+    </bean>
+
+    <bean id="strategyDao" class="com.mailang.jdbc.dao.StrategyDao">
         <property name="abstractDaoMapper" ref="abstractDaoMapper"></property>
     </bean>
 </beans>

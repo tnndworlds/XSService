@@ -1,9 +1,8 @@
 package com.mailang.log;
 
-import com.mailang.jdbc.dao.SystemLogDao;
-import com.mailang.utils.SpringUtils;
 import com.mailang.utils.Utils;
 import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 
 /**
@@ -24,7 +23,7 @@ public class Logger
 
     private final static String ERROR = "Error";
 
-    private static SystemLogDao systemLogDao = SpringUtils.getBeanByClass(SystemLogDao.class);
+    //private static SystemLogDao systemLogDao = SpringUtils.getBeanByClass(SystemLogDao.class);
 
     private org.slf4j.Logger LOG;
 
@@ -70,25 +69,22 @@ public class Logger
 
     public void xdebug(String format, Object... args)
     {
-        systemLogDao.save(DEBUG, MessageFormat.format(format, args));
+       // systemLogDao.save(DEBUG, MessageFormat.format(format, args));
         this.debug(format, args);
     }
 
     public void xinfo(String format, Object... args)
     {
-        systemLogDao.save(INFO, MessageFormat.format(format, args));
         this.info(format, args);
     }
 
     public void xerror(String format, Object... args)
     {
-        systemLogDao.save(ERROR, MessageFormat.format(format, args));
         this.error(format, args);
     }
 
     public void xwarn(String format, Object... args)
     {
-        systemLogDao.save(WARN, MessageFormat.format(format, args));
         this.warn(format, args);
     }
 }

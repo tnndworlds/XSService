@@ -1,6 +1,7 @@
 package com.mailang.ddtask.task;
 
 import com.mailang.bean.pojo.DTaskBean;
+import com.mailang.bean.qmodel.PunchModel;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class QuickTask implements DTask
     }
 
     @Override
-    public boolean punch(DTaskBean data)
+    public boolean punch(PunchModel data)
     {
         return true;
     }

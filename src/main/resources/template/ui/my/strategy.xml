@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <viewTemplate>
     <module>
-        <name>Tags</name>
+        <name>Strategy</name>
         <contents>
             <content>
                 <key>data</key>
@@ -9,7 +9,7 @@
                 <type>SQL</type>
                 <value>
                     <![CDATA[
-						SELECT *, TITLE AS text FROM XS_DD_TAG WHERE USER_ID='${userId}' ORDER BY VALID DESC;
+						SELECT *, validDay(TYPE, PARAM) AS VALID FROM XS_DD_STRATEGY WHERE USER_ID IN ('${userId}', 'system') ORDER BY USER_ID;
 					]]>
                 </value>
                 <dataAdapter></dataAdapter>
