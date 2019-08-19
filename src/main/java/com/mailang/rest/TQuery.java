@@ -42,7 +42,7 @@ public class TQuery
             paramMap.put(XSCons.USER_ID, dataModel.getUserId());
             for (String module : dataModel.getQueryId().split(XSCons.SEMICOLON))
             {
-                Object data = TemplateDataProvider.getResult(dataModel.getQueryId(), paramMap);
+                Object data = TemplateDataProvider.getResult(module, paramMap);
                 retData.put(module, data);
             }
 

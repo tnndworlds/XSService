@@ -54,10 +54,10 @@ public class TaskMgr
             List<JOBEntity> jobList = jobDao.queryRetEntity(new ArrayList<QCondition>());
 
 
-            jobList.stream().filter(item->{
+            /*jobList.stream().filter(item->{
                 String aa = "b" + temp;
                 return true;
-            });
+            });*/
 
 
             for (JOBEntity entity : jobList)

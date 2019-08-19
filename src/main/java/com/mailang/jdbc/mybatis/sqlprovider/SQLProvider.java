@@ -164,7 +164,7 @@ public class SQLProvider
         return sql;
     }
 
-    public String updateBySql(TableMeta metaTable,final String sqlSub, final Map<String, Object> dataMap)
+    public String updateBySql(final TableMeta metaTable,final String sqlSub, final Map<String, Object> dataMap)
     {
         String sql = new SQL(){{
             UPDATE(metaTable.getTableName());
